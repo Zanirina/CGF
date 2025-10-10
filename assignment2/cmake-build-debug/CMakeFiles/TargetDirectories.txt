@@ -1,0 +1,4 @@
+C:/Users/22208/CLionProjects/assignment2/cmake-build-debug/CMakeFiles/main.dir
+C:/Users/22208/CLionProjects/assignment2/cmake-build-debug/CMakeFiles/cube.dir
+C:/Users/22208/CLionProjects/assignment2/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/22208/CLionProjects/assignment2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
