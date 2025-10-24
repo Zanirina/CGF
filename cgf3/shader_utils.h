@@ -8,7 +8,7 @@
 inline std::string loadShaderSource(const std::string& filepath) {
     std::ifstream file(filepath);
     if (!file.is_open()) {
-        std::cerr << "❌ Error: couldn't open shader" << filepath << std::endl;
+        std::cerr << "Error: couldn't open shader " << filepath << std::endl;
         return "";
     }
     std::stringstream buffer;
@@ -25,9 +25,9 @@ inline GLuint compileShader(GLenum type, const std::string& source) {
     GLint success;
     glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
     if (!success) {
-        char info[512];
-        glGetShaderInfoLog(shader, 512, nullptr, info);
-        std::cerr << "❌ Ошибка компиляции шейдера:\n" << info << std::endl;
+        char info[1024];
+        glGetShaderInfoLog(shader, 1024, nullptr, info);
+        std::cerr << "Shader compile error:\n" << info << std::endl;
     }
     return shader;
 }
@@ -35,6 +35,11 @@ inline GLuint compileShader(GLenum type, const std::string& source) {
 inline GLuint createShaderProgram(const std::string& vertexPath, const std::string& fragmentPath) {
     std::string vSrc = loadShaderSource(vertexPath);
     std::string fSrc = loadShaderSource(fragmentPath);
+
+    if (vSrc.empty() || fSrc.empty()) {
+        std::cerr << "Error: shader source empty for " << vertexPath << " or " << fragmentPath << std::endl;
+        return 0;
+    }
 
     GLuint vShader = compileShader(GL_VERTEX_SHADER, vSrc);
     GLuint fShader = compileShader(GL_FRAGMENT_SHADER, fSrc);
@@ -47,9 +52,9 @@ inline GLuint createShaderProgram(const std::string& vertexPath, const std::stri
     GLint success;
     glGetProgramiv(program, GL_LINK_STATUS, &success);
     if (!success) {
-        char info[512];
-        glGetProgramInfoLog(program, 512, nullptr, info);
-        std::cerr << "❌ Ошибка линковки шейдера:\n" << info << std::endl;
+        char info[1024];
+        glGetProgramInfoLog(program, 1024, nullptr, info);
+        std::cerr << "Program link error:\n" << info << std::endl;
     }
 
     glDeleteShader(vShader);

@@ -9,7 +9,15 @@ find_package(glfw3 CONFIG REQUIRED)
 find_package(glm CONFIG REQUIRED)
 find_package(glew CONFIG REQUIRED)
 find_package(OpenGL REQUIRED)
+find_package(imgui CONFIG REQUIRED)
 
 add_executable(cgf3 main.cpp)
 
-target_link_libraries(cgf3 PRIVATE glfw glm::glm GLEW::GLEW OpenGL::GL)
+target_link_libraries(cgf3 PRIVATE
+        OpenGL::GL
+        GLEW::GLEW
+        glfw
+        glm::glm
+        imgui::imgui
+)
+target_include_directories(cgf3 PRIVATE ${OPENGL_INCLUDE_DIRS})
